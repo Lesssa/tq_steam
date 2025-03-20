@@ -1,0 +1,10 @@
+{
+    "base_url": "https://store.steampowered.com/",
+    "locators": {
+        "about_link": "//a[@class='menuitem ' and contains(@href, 'about') and contains(@href, 'global-header')]",
+        "navbar": "//*[@id='store_nav_area']",
+        "slider": "//*[@id='home_hero_ctn']",
+        "stats": "//*[@class='online_stat']",
+        "greeting": "//*[@id='about_greeting']"
+    }
+}

@@ -1,15 +1,17 @@
 import pytest
 
+from config import config
 from driver import Driver
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(autouse=True)
 def browser() -> Driver:
-    driver = Driver()
+    driver = Driver().get_driver()
     driver.set_window_size(1920, 1080)
-    driver.get("https://store.steampowered.com/")
+    driver.get(config["base_url"])
 
     yield driver
-
-    driver.quit()
-    Driver._instance = None
+    try:
+        driver.quit()
+    finally:
+        driver.__class__._instances = {}

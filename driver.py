@@ -1,17 +1,23 @@
-from selenium.webdriver import Chrome
+from selenium import webdriver
 
 
-class Singleton(type):
-    _instances = {}
+class Driver:
+    _instance = None
 
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-        return cls._instances[cls]
+    def __new__(cls):
+        if cls._instance is None:
+            options = webdriver.ChromeOptions()
+            options.add_argument("--disable-blink-features=AutomationControlled")
+            options.add_argument("--incognito")
+            cls._instance = super().__new__(cls)
+            cls._instance.driver = webdriver.Chrome(options=options)
+            cls._instance.driver.implicitly_wait(5)
+        return cls._instance
 
+    def get_driver(self):
+        return self.driver
 
-class Driver(Chrome, metaclass=Singleton):
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.implicitly_wait(5)  # default time waiting for a locator
+    def quit_driver(self):
+        if self.driver:
+            self.driver.quit()
+            self._instance = None
