@@ -6,6 +6,8 @@ def test_about():
     Store.verify_page()
     Store.open_about()
     About.verify_page()
-    About.check_stats()
+    num_stats = About.get_stats()
+    assert num_stats[0] > num_stats[1]
+
 
 

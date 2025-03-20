@@ -1,18 +1,30 @@
 from selenium import webdriver
 
+from config import config
+
 
 class Driver:
     _instance = None
 
     def __new__(cls):
+        browser_name = config["browser"].lower()
+        options = None
         if cls._instance is None:
-            options = webdriver.ChromeOptions()
-            options.add_argument("--disable-blink-features=AutomationControlled")
-            options.add_argument("--incognito")
+            if browser_name == "chrome":
+                options = webdriver.ChromeOptions()
+            else:
+                raise Exception(f"Browser {browser_name} is not supported")
+            for arg in config["browser_options"]:
+                options.add_argument(arg)
             cls._instance = super().__new__(cls)
-            cls._instance.driver = webdriver.Chrome(options=options)
-            cls._instance.driver.implicitly_wait(5)
+            cls._instance.driver = cls._create_driver(browser_name, options)
+            cls._instance.driver.implicitly_wait(config["waiting_time"])
         return cls._instance
+
+    @staticmethod
+    def _create_driver(browser_name, options):
+        if browser_name == "chrome":
+            return webdriver.Chrome(options=options)
 
     def get_driver(self):
         return self.driver
