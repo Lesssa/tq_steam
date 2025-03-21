@@ -18,7 +18,6 @@ class Driver:
                 options.add_argument(arg)
             cls._instance = super().__new__(cls)
             cls._instance.driver = cls._create_driver(browser_name, options)
-            cls._instance.driver.implicitly_wait(config["waiting_time"])
         return cls._instance
 
     @staticmethod
