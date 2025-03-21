@@ -4,7 +4,8 @@
     "browser_options": [
         "--incognito",
         "--start-maximized",
-        "--lang=en-US"
+        "--lang=ru",
+        "--disable-software-rasterizer"
     ],
     "waiting_time": 5
 }

@@ -24,7 +24,7 @@ class Store:
         about.click()
 
     @staticmethod
-    def expand_noteworthy():
+    def open_topselling():
         noteworthy = Driver().get_driver().find_element(By.XPATH, Store._noteworthy_xpath)
         ActionChains(Driver().get_driver()).move_to_element(noteworthy).perform()
         wait = WebDriverWait(Driver().get_driver(), 5)
